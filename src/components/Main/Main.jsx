@@ -27,7 +27,7 @@ export default function Main() {
   }
   return (
     <>
-      <div className="h-[200vh] pt-20 pl-20 min-[1970px]:pl-0">
+      <div className="pt-20 pl-20 min-[1970px]:pl-0">
         <div className="overflow-x-scroll min-[1970px]:overflow-x-hidden lg:border-b border-black/20">
           <div className="container max-w-[1850px] mx-auto">
             <ul className="flex items-center justify-between w-full py-4">
@@ -45,7 +45,7 @@ export default function Main() {
           </div>
         </div>
         <div className="container max-w-[1850px] mx-auto">
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap ">
             {Courses.map((course, index) => (
               <CoursCard
                 key={index}
