@@ -604,6 +604,14 @@ video {
   left: 0px;
 }
 
+.z-\[98\] {
+  z-index: 98;
+}
+
+.z-\[99\] {
+  z-index: 99;
+}
+
 .m-auto {
   margin: auto;
 }
@@ -623,9 +631,9 @@ video {
   margin-right: auto;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .ml-2 {
@@ -668,9 +676,18 @@ video {
   width: 100%;
 }
 
+.w-max {
+  width: -webkit-max-content;
+  width: max-content;
+}
+
 .w-min {
   width: -webkit-min-content;
   width: min-content;
+}
+
+.max-w-\[1850px\] {
+  max-width: 1850px;
 }
 
 .max-w-\[1920px\] {
@@ -690,6 +707,10 @@ video {
   justify-content: space-between;
 }
 
+.overflow-scroll {
+  overflow: scroll;
+}
+
 .rounded-2xl {
   border-radius: 1rem;
 }
@@ -698,13 +719,12 @@ video {
   border-radius: 0.75rem;
 }
 
-.border-2 {
-  border-width: 2px;
+.border {
+  border-width: 1px;
 }
 
-.border-y-2 {
-  border-top-width: 2px;
-  border-bottom-width: 2px;
+.border-2 {
+  border-width: 2px;
 }
 
 .border-b-2 {
@@ -721,6 +741,14 @@ video {
 
 .border-black\/25 {
   border-color: rgb(0 0 0 / 0.25);
+}
+
+.border-black\/50 {
+  border-color: rgb(0 0 0 / 0.5);
+}
+
+.bg-black\/20 {
+  background-color: rgb(0 0 0 / 0.2);
 }
 
 .bg-blue {
@@ -760,9 +788,18 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.pl-20 {
+  padding-left: 5rem;
 }
 
 .pt-20 {
@@ -807,13 +844,44 @@ video {
   outline-offset: 2px;
 }
 
+.filter {
+  -webkit-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+          filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.duration-100 {
+  transition-duration: 100ms;
+}
+
 * {
   padding: 0;
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background: #e2e2e2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a0a0a0;
+  border-radius: 10px;
+}
+
+.hover\:text-blue:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 106 255 / var(--tw-text-opacity));
+}
+
 @media (min-width: 1280px) {
   .xl\:w-\[25\%\] {
     width: 25%;
+  }
+}
+
+@media (min-width: 1970px) {
+  .min-\[1970px\]\:pl-0 {
+    padding-left: 0px;
   }
 }
