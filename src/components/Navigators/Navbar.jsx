@@ -16,7 +16,11 @@ import {
 } from "react-icons/fa";
 import { HiOutlineBookOpen, HiOutlineViewGrid } from "react-icons/hi";
 
-export default function TopNavbar() {
+import { useStateValue } from "../context/Context";
+
+export default function Navbar() {
+  const [{ basket }] = useStateValue();
+
   return (
     <>
       <nav className=" z-[99] py-4 fixed w-full bg-white border-b-2 border-black/20">
@@ -56,7 +60,12 @@ export default function TopNavbar() {
               <div className="w-[35%] xl:w-[25%] flex items-center justify-between">
                 <Link className=" text-xl ">Ramazon taqvimi</Link>
                 <Link className="">Spiker</Link>
-                <Link>
+                <Link to="/mybasket" className="relative text-lg block">
+                  {basket.length > 0 && (
+                    <div className="absolute h-4 w-4 text-xs flex justify-center items-center -right-2 -top-3 bg-blue p-1 rounded-full text-white">
+                      {basket.length}
+                    </div>
+                  )}
                   <FaShoppingBasket />
                 </Link>
                 <Link className="bg-blue text-white rounded-xl py-2 px-4">
@@ -69,7 +78,10 @@ export default function TopNavbar() {
       </nav>
       <div className=" z-[98] bg-white w-20 pt-20 h-screen border-r-2 border-black/20 transi fixed left-0 px-2">
         <div className="border-b-2 border-black/20">
-          <Link className="text-center block my-5 duration-100 hover:text-blue">
+          <Link
+            to="/"
+            className="text-center block my-5 duration-100 hover:text-blue"
+          >
             <HiOutlineViewGrid className="text-3xl mx-auto stroke-blue stroke-2" />
             <span className=" text-xs  ">Bosh Sahifa</span>
           </Link>
@@ -77,7 +89,15 @@ export default function TopNavbar() {
             <FaGraduationCap className="text-2xl mx-auto stroke-2" />
             <span className=" text-xs  ">Mening Kurslarim</span>
           </Link>
-          <Link className="text-center block my-5 duration-100 hover:text-blue">
+          <Link
+            to="/mybasket"
+            className="text-center block my-5 duration-100 hover:text-blue relative"
+          >
+            {basket.length > 0 && (
+              <div className="absolute h-4 w-4 text-xs flex justify-center items-center right-2 -top-3 bg-blue p-1 rounded-full text-white">
+                {basket.length}
+              </div>
+            )}
             <FaShoppingBasket className="text-2xl mx-auto stroke-2" />
             <span className=" text-xs  ">Savatdagi Kurslar</span>
           </Link>

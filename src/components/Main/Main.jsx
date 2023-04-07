@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CoursCard from "../Courses/CoursCard/CoursCard";
-// Public imports
-// import style from "./Main.module.css";
 
-export default function Main() {
+const shortid = require("shortid");
+
+export default function Main({ basket, setBasket }) {
   let filterItem = [
     "Biznes",
     "IT va dasturlash",
@@ -15,16 +15,23 @@ export default function Main() {
     "Shaxsiy o'sish",
     "Boshqalar",
   ];
+  let Courses = localStorage.getItem("courses")
+    ? JSON.parse(localStorage.getItem("courses"))
+    : [];
 
-  let Courses = [];
-  for (let i = 0; i <= 10; i++) {
-    Courses.push({
-      title: "Web Dasturlash",
-      author: "Otabek Qarshiboyev",
-      price: "1 200 000",
-      img: "https://cdn4.telegram-cdn.org/file/totHZiQW5oe2Nj9QG3HMP1op4kFW6Ukx1q0qJr4F3uo2E6OHHk20weKgZj-9616Y7us944Y0ivIrmh3IbzOO3q_rgySMVuVdK5knBM0wYUMOH5ycW6NJ7iUTPSnsLviHymi3utgDTEcVKeej8gRnnL5PWE3cMcyQJiWUbSTkafG8SAfrf0PPtJ2xDGZv_W9aE5j3fEpoCvkP01VBjfu9kZ0bl_5sSKPo7sbHwOIuHS2U7KRl8QpY1sRjDxr1tbb3NuMCkj3_ovPnKUOGtzTrlv4N6WwS6wCiuB9Mdi2rGqDUF0ECSxhikuQcrtz6c2NkqbpIDHz1w-djTfyfQrX3pw.jpg",
-    });
+  if (Courses.length === 0) {
+    for (let i = 0; i < 10; i++) {
+      Courses.push({
+        id: shortid.generate(),
+        title: "Web Dasturlash",
+        author: "Otabek Qarshiboyev",
+        price: 1200000,
+        img: "./img/course_img.jpg",
+      });
+    }
+    localStorage.setItem("courses", JSON.stringify(Courses));
   }
+
   return (
     <>
       <div className="pt-20 pl-20 min-[1970px]:pl-0">
@@ -49,10 +56,13 @@ export default function Main() {
             {Courses.map((course, index) => (
               <CoursCard
                 key={index}
+                id={course.id}
                 img={course.img}
                 title={course.title}
                 author={course.author}
                 price={course.price}
+                basket={basket}
+                setBasket={setBasket}
               />
             ))}
           </div>
