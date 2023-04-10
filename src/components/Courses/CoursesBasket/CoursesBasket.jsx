@@ -76,9 +76,12 @@ export default function CoursesBasket() {
                 </div>
               </div>
             ) : (
-              <p className=" text-xl pt-5 text-black/60">
-                Savatda kurslar mavjud emas
-              </p>
+              <>
+                <p className=" text-xl pt-5 text-black/60">
+                  Savatda kurslar mavjud emas
+                </p>
+                <div className="w-9/12"></div>
+              </>
             )}
             <div className="w-3/12 pt-16 pl-8">
               <div className="border border-black/30 rounded-xl mt-2 p-6">

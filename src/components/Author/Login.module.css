@@ -1,0 +1,66 @@
+.inputCon {
+  width: calc(100% / 1.5);
+  margin: auto;
+  border: 1px solid rgba(0, 0, 0, 0.384);
+  padding: 20px;
+  border-radius: 15px;
+}
+.input {
+  width: 100% !important;
+  font-size: 20px !important;
+  border: none !important;
+}
+
+.inputButton {
+  border: none !important;
+  background-color: white !important;
+}
+
+.pass_input {
+  position: relative;
+}
+
+/* .pass_input::before {
+  content: "Parolingizni kiriting ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 20px;
+  background: red;
+} */
+
+.input_after {
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 100px;
+  font-size: 20px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.span_show {
+  top: 0;
+  left: 80px;
+  padding: 5px;
+  font-size: 15px;
+  background: white;
+}
+
+.inputShake {
+  animation: shake 0.3s linear;
+}
+
+@keyframes shake {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(20px);
+  }
+  75% {
+    transform: translateX(-20px);
+  }
+}

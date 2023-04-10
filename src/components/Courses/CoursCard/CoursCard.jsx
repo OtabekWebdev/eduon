@@ -36,11 +36,13 @@ export default function CoursCard({ id, img, title, author, price }) {
     <>
       <div className="w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 px-[1.5%] h-min pt-5">
         <div className="w-full h-1/3">
-          <img
-            src={img}
-            alt={title}
-            className="w-full block h-1/3 rounded-3xl"
-          />
+          <Link to={"/chosenCourse/" + id}>
+            <img
+              src={img}
+              alt={title}
+              className="w-full block h-1/3 rounded-3xl"
+            />
+          </Link>
         </div>
         <div className="flex py-4 items-center justify-between">
           <Link>

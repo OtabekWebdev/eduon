@@ -4,7 +4,7 @@ import styles from "./Navbar.module.css";
 import logo from "./img/logo.png";
 
 // Component imports
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Icon imports
 import {
@@ -19,9 +19,10 @@ import { HiOutlineBookOpen, HiOutlineViewGrid } from "react-icons/hi";
 import { useStateValue } from "../context/Context";
 
 export default function Navbar() {
+  const { pathname } = useLocation();
   const [{ basket }] = useStateValue();
 
-  return (
+  return pathname !== "/login" && pathname !== "/register" ? (
     <>
       <nav className=" z-[99] py-4 fixed w-full bg-white border-b-2 border-black/20">
         <div className="container max-w-[1920px] m-auto px-4">
@@ -68,7 +69,10 @@ export default function Navbar() {
                   )}
                   <FaShoppingBasket />
                 </Link>
-                <Link className="bg-blue text-white rounded-xl py-2 px-4">
+                <Link
+                  to="/login"
+                  className="bg-blue text-white rounded-xl py-2 px-4"
+                >
                   Boshlash
                 </Link>
               </div>
@@ -107,6 +111,51 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
+    </>
+  ) : (
+    <>
+      <nav className=" z-[99] py-4 fixed w-full bg-white border-b-2 border-black/20">
+        <div className="container max-w-[1920px] m-auto px-4">
+          <div className="flex items-center">
+            <div className="flex items-center justify-between w-full">
+              <div className="max-w-max flex justify-between items-center">
+                <Link to="/">
+                  <img src={logo} className={styles.img} alt="" />
+                </Link>
+                <div>
+                  <button className="bg-blue flex items-center justify-between ml-7 mx-2 px-4 py-2 rounded-2xl text-white">
+                    <HiOutlineBookOpen className="text-3xl" />
+                    <span className="ml-2 text-xl">Kurslar</span>
+                  </button>
+                </div>
+              </div>
+              <div className="w-[40%] flex items-center justify-between">
+                <div className="flex items-center w-full">
+                  <div className="flex w-full justify-between border-2 border-black/25 p-2 rounded-2xl ">
+                    <FaSearch className="text-2xl text-black/25 mr-5" />
+                    <input
+                      type="text"
+                      placeholder="Qidirish..."
+                      className="w-full outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="xl:w-[15%] flex items-center justify-between">
+                <Link to="/login" className="py-2 px-4">
+                  Biz haqimizda
+                </Link>
+                <Link
+                  to="/login"
+                  className="bg-blue text-white rounded-xl py-2 px-4"
+                >
+                  Boshlash
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
     </>
   );
 }
