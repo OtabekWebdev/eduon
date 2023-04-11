@@ -64,3 +64,18 @@
     transform: translateX(-20px);
   }
 }
+
+.codeInputs input {
+  --wh: 60px;
+  width: var(--wh);
+  height: var(--wh);
+  border: 1px solid #006aff;
+  border-radius: 10px;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 40px;
+  caret-color: transparent;
+}
+.codeInputs input:focus {
+  outline: 5px solid #006aff63;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import styles from "./Login.module.css";
@@ -27,6 +28,7 @@ export default function Login() {
   return (
     <>
       <div className="container mx-auto pt-20">
+        <div id="recaptcha-container"></div>
         <form
           action=""
           onSubmit={(e) => {
@@ -106,7 +108,9 @@ export default function Login() {
               </div>
               <Link className=" underline">Parolingizni unutdingizmi</Link>
             </div>
-            <button className="bg-blue/50 hover:bg-blue duration-300 text-2xl font-semibold outline-none text-white p-5 w-full mt-10 mb-10 rounded-xl drop-shadow-xl">
+            <button
+              className="bg-blue/50 hover:bg-blue duration-300 text-2xl font-semibold outline-none text-white p-5 w-full mt-10 mb-10 rounded-xl drop-shadow-xl"
+            >
               Tizimga Kirish
             </button>
             <div className="relative border-t border-black/30">

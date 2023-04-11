@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
+import AuthCode from "react-auth-code-input";
+
 import styles from "./Login.module.css";
 
 export default function Register() {
-  const [RegisteData, setRegisterData] = useState({
+  const [registerData, setRegisterData] = useState({
     phone: "",
+    code: 0,
     request: false,
   });
-  const [Shake, setShake] = useState(false);
-  const InputData = (e) => {
-    RegisteData.phone = e;
-    if (e.length === 12) {
-      RegisteData.request = true;
-    } else {
-      RegisteData.request = false;
-    }
-    setRegisterData(RegisteData);
+  const [shake, setShake] = useState(false);
+
+  const inputData = (e) => {
+    const phone = e.replace(/\D/g, ""); // Telefon raqamdan faqat raqamlarni olib tashlash
+    console.log(phone.length);
+    setRegisterData({ ...registerData, phone });
   };
 
-  const DetectReq = () => {
-    if (!RegisteData.request && !Shake) {
+  const detectReq = () => {
+    if (!registerData.request && !shake) {
       setShake(true);
       setTimeout(() => {
         setShake(false);
@@ -28,35 +28,58 @@ export default function Register() {
     }
   };
 
+  const onSubmitOne = (e) => {
+    e.preventDefault();
+    if (registerData.phone.length === 12) {
+      setRegisterData({ ...registerData, request: true });
+    } else {
+      detectReq();
+      setRegisterData({ ...registerData, request: false });
+    }
+  };
+
+  const AuthorCodeInput = (code) => {
+    setRegisterData({ ...registerData, code });
+    console.log(registerData);
+  };
+
   return (
     <>
       <div className="container mx-auto pt-20">
-        <form
-          action=""
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-          className="mt-24"
-        >
+        <form action="" onSubmit={onSubmitOne} className="mt-24">
           <h1 className="text-3xl text-center font-bold mb-20">
             Ro'yxatdan o'tish
           </h1>
-          <PhoneInput
-            name="phone"
-            value={RegisteData.phone}
-            onChange={(e) => {
-              InputData(e);
-            }}
-            country={"uz"}
-            containerClass={
-              styles.inputCon + " " + (Shake ? styles.inputShake : "")
-            }
-            inputClass={styles.input}
-            buttonClass={styles.inputButton}
-          />
+          <div className={" overflow-hidden w-full h-24 justify-between"}>
+            <div
+              className={
+                styles.full +
+                " " +
+                (registerData.request ? " -mt-24" : "") +
+                " duration-300 mb-10"
+              }
+            >
+              <PhoneInput
+                name="phone"
+                value={registerData.phone}
+                onChange={inputData}
+                country={"uz"}
+                containerClass={
+                  styles.inputCon + " " + (shake ? styles.inputShake : "")
+                }
+                inputClass={styles.input}
+                buttonClass={styles.inputButton}
+              />
+            </div>
+            <div className={styles.codeInputs + "  mx-auto w-max"}>
+              <AuthCode
+                autoFocus={registerData.request}
+                onChange={AuthorCodeInput}
+              />
+            </div>
+          </div>
           <div className="w-8/12 mx-auto">
             <button
-              onClick={DetectReq}
               className={
                 "hover:bg-blue bg-blue/50 duration-300 text-2xl font-semibold outline-none text-white p-5 w-full mt-10 mb-10 rounded-xl drop-shadow-xl"
               }
@@ -78,3 +101,38 @@ export default function Register() {
     </>
   );
 }
+
+// const CodeInputs = ({ registerData, setRegisterData }) => {
+//   const [intValues, setIntValues] = useState(Array(6).fill(""));
+//   const inputRefs = useRef([]);
+//   const codeInputOnChange = (e, index) => {
+//     const { value } = e.target;
+//     if (value.length < 2) {
+//       const newIntValues = [...intValues];
+//       newIntValues[index] = value;
+//       setIntValues(newIntValues);
+//     }
+//     if (value.length === 1 && index < inputRefs.current.length - 1) {
+//       inputRefs.current[index + 1].focus();
+//     }
+//     const updatedRegisterData = { ...registerData };
+//     updatedRegisterData.code = intValues.join(""); // intValues ni yangi qiymati bilan o'zgartiramiz
+//     setRegisterData(updatedRegisterData);
+//     console.log(registerData);
+//   };
+
+//   return (
+//     <div className="mx-auto w-max">
+//       {intValues.map((value, index) => (
+//         <input
+//           key={index}
+//           ref={(el) => (inputRefs.current[index] = el)}
+//           value={intValues[index]}
+//           type="text"
+//           onChange={(e) => codeInputOnChange(e, index)}
+//           className="border w-16 h-16 text text-center text-3xl rounded-lg mx-2"
+//         />
+//       ))}
+//     </div>
+//   );
+// };
