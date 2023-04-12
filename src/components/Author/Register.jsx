@@ -63,8 +63,9 @@ export default function Register() {
         .catch((error) => {
           console.log("SMS not sent", error);
           detectReq();
-          setRegisterData({ ...registerData, request: false });
         });
+    } else {
+      detectReq();
     }
     if (registerData.request) {
       window.confirmationResult
