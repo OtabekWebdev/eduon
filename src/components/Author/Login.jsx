@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import styles from "./Login.module.css";
+import styles from "./Author.module.css";
 
 // Icon imports
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";

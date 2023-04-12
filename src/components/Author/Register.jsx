@@ -1,21 +1,41 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import AuthCode from "react-auth-code-input";
-
-import styles from "./Login.module.css";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import styles from "./Author.module.css";
+import { auth } from "../../config/firebase";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [registerData, setRegisterData] = useState({
     phone: "",
-    code: 0,
+    code: "",
+    code_request: false,
     request: false,
   });
   const [shake, setShake] = useState(false);
+  const [codeErr, setCodeErr] = useState(false);
+  const [codeSuc, setCodeSuc] = useState(false);
+  function captcha(e) {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+            console.log(response);
+            onSignInSubmit(e);
+          },
+        },
+        auth
+      );
+    }
+  }
 
   const inputData = (e) => {
-    const phone = e.replace(/\D/g, ""); // Telefon raqamdan faqat raqamlarni olib tashlash
-    console.log(phone.length);
+    const phone = e.replace(/\D/g, "");
     setRegisterData({ ...registerData, phone });
   };
 
@@ -28,35 +48,65 @@ export default function Register() {
     }
   };
 
-  const onSubmitOne = (e) => {
+  const onSignInSubmit = async (e) => {
     e.preventDefault();
-    if (registerData.phone.length === 12) {
-      setRegisterData({ ...registerData, request: true });
-    } else {
-      detectReq();
-      setRegisterData({ ...registerData, request: false });
+
+    if (registerData.phone.length === 12 && !registerData.request) {
+      captcha(e);
+      const phoneNumber = "+" + registerData.phone; // You can update this with registerData.phone
+      const appVerifier = window.recaptchaVerifier;
+      await signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          setRegisterData({ ...registerData, request: true });
+        })
+        .catch((error) => {
+          console.log("SMS not sent", error);
+          detectReq();
+          setRegisterData({ ...registerData, request: false });
+        });
+    }
+    if (registerData.request) {
+      window.confirmationResult
+        .confirm(registerData.code)
+        .then((result) => {
+          // User signed in successfully.
+          setCodeSuc(true);
+          const user = result.user;
+          console.log(user);
+          setRegisterData({ ...registerData, code_request: true });
+        })
+        .catch((error) => {
+          setCodeErr(true);
+          setTimeout(() => {
+            setCodeErr(false);
+          }, 750);
+        });
     }
   };
 
   const AuthorCodeInput = (code) => {
     setRegisterData({ ...registerData, code });
-    console.log(registerData);
   };
+
+  if (registerData.code_request) {
+    setTimeout(() => {
+      navigate("/");
+    }, 1500);
+  }
 
   return (
     <>
       <div className="container mx-auto pt-20">
-        <form action="" onSubmit={onSubmitOne} className="mt-24">
+        <div id="recaptcha-container"></div>
+        <form action="" onSubmit={onSignInSubmit} className="mt-24">
           <h1 className="text-3xl text-center font-bold mb-20">
             Ro'yxatdan o'tish
           </h1>
           <div className={" overflow-hidden w-full h-24 justify-between"}>
             <div
               className={
-                styles.full +
-                " " +
-                (registerData.request ? " -mt-24" : "") +
-                " duration-300 mb-10"
+                (registerData.request ? " -mt-24" : "") + " duration-300 mb-10"
               }
             >
               <PhoneInput
@@ -71,8 +121,17 @@ export default function Register() {
                 buttonClass={styles.inputButton}
               />
             </div>
-            <div className={styles.codeInputs + "  mx-auto w-max"}>
+            <div
+              className={
+                styles.codeInputs +
+                " " +
+                (codeErr ? styles.codeErr : "") +
+                (codeSuc ? styles.codeSuc : "") +
+                "  mx-auto w-max"
+              }
+            >
               <AuthCode
+                allowedCharacters={"numeric"}
                 autoFocus={registerData.request}
                 onChange={AuthorCodeInput}
               />
@@ -80,6 +139,7 @@ export default function Register() {
           </div>
           <div className="w-8/12 mx-auto">
             <button
+              type={registerData.code_request ? "button" : "submit"}
               className={
                 "hover:bg-blue bg-blue/50 duration-300 text-2xl font-semibold outline-none text-white p-5 w-full mt-10 mb-10 rounded-xl drop-shadow-xl"
               }

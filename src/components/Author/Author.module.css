@@ -75,7 +75,69 @@
   text-align: center;
   font-size: 40px;
   caret-color: transparent;
+  transition: 0.1s;
+  color: rgba(0, 0, 0, 0.856);
 }
 .codeInputs input:focus {
   outline: 5px solid #006aff63;
+}
+
+.codeInputs div input:nth-child(1) {
+  --d: 0ms;
+}
+.codeInputs div input:nth-child(2) {
+  --d: 50ms;
+}
+.codeInputs div input:nth-child(3) {
+  --d: 100ms;
+}
+.codeInputs div input:nth-child(4) {
+  --d: 150ms;
+}
+.codeInputs div input:nth-child(5) {
+  --d: 200ms;
+}
+.codeInputs div input:nth-child(6) {
+  --d: 250ms;
+}
+
+.codeErr input {
+  animation: CodeShake 0.3s;
+  animation-delay: var(--d);
+  color: #ef2b23;
+  border: 3px solid #ef2b23;
+  /* border-color: #ef2b23; */
+}
+@keyframes CodeShake {
+  0%,
+  100%,
+  50% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.codeSuc input {
+  animation: CodeSuc 1s;
+  animation-delay: calc(var(--d) * 1.5);
+  color: #1ce72d;
+  border: 3px solid #1ce72d;
+  transition-delay: calc(var(--d) * 1.5);
+  transform: translateY(80px);
+}
+@keyframes CodeSuc {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(80px);
+  }
 }
