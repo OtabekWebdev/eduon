@@ -11,6 +11,7 @@ export default function CoursesMain() {
     <>
       <div className="pt-20 pl-20">
         <div className="container">
+          <h1>Mana shuyer</h1>
           <h1 className=" text-3xl">{Coursedata.id}</h1>
           <h1 className=" text-3xl">{Coursedata.title}</h1>
           <h1 className=" text-3xl">{Coursedata.author}</h1>

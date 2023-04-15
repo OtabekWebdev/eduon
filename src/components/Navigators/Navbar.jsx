@@ -13,6 +13,7 @@ import {
   FaShoppingBasket,
   FaGraduationCap,
   FaLocationArrow,
+  FaUserCircle,
 } from "react-icons/fa";
 import { HiOutlineBookOpen, HiOutlineViewGrid } from "react-icons/hi";
 
@@ -21,6 +22,7 @@ import { useStateValue } from "../context/Context";
 export default function Navbar() {
   const { pathname } = useLocation();
   const [{ basket }] = useStateValue();
+  // const
 
   return pathname !== "/login" && pathname !== "/register" ? (
     <>
@@ -69,12 +71,18 @@ export default function Navbar() {
                   )}
                   <FaShoppingBasket />
                 </Link>
-                <Link
-                  to="/login"
-                  className="bg-blue text-white rounded-xl py-2 px-4"
-                >
-                  Boshlash
-                </Link>
+                {JSON.parse(localStorage.getItem("accessToken")) ? (
+                  <Link to="/profile" className=" text-4xl">
+                    <FaUserCircle />
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="bg-blue text-white rounded-xl py-2 px-4"
+                  >
+                    Boshlash
+                  </Link>
+                )}
               </div>
             </div>
           </div>

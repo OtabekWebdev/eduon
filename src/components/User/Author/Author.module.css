@@ -141,3 +141,10 @@
     transform: translateY(80px);
   }
 }
+
+.focusInput ~ span {
+  top: -12px;
+  font-size: 15px;
+  padding:0 5px;
+  background: white;
+}
